@@ -50,6 +50,16 @@ app.get('/todos/:id',(req,res)=>{
     
 })
 
+app.delete('/todos/:id',(req,res)=>{
+    var id = req.params.id;
+
+    Todo1.findByIdAndRemove(id)
+    .then((todo)=>{
+     res.send(todo)
+    }).catch((e)=>{
+       res.status(400).send();             
+    })
+})
 
 app.listen(port,()=>{
     console.log('running');
