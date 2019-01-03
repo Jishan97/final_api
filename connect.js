@@ -1,48 +1,29 @@
-const mongoose = require('mongoose');
+var express = require('express');
+var bodyParser = require('body-parser');
 
 
-mongoose.Promise=global.Promise;
-mongoose.connect('mongodb://localhost:27017/App');
+var {mongoose} = require('./db/mongoose');
+var {Todo} = require('./models/todo');
+var {User} = require('./models/user');
 
-var  app = mongoose.model('app',{
+var app = express();
+app.use(bodyParser.json());
 
-    text:{
-      type:String,
-      required:true
-    },
-    completed:{
-      type:Boolean
-    },
-    completedAt:{
-      type:Number
-    }
+
+app.post('/todos',(req,res)=>{
+var todo = new Todo({
+    text:req.body.text,
 
 });
 
-var newApp = new app({
-    text:'cook everything',
-    completed:true,
-    completedAt:123
+todo.save()
+.then((doc)=>{
+res.send(doc)
+})
+.catch(e=>res.send(e))
+})
+
+
+app.listen(3000,()=>{
+    console.log('running');
 });
-
-
-newApp.save().then((doc)=>{ 
-
-    console.log(doc);
-
-})
-.catch(e=> console.log(e))
-
-var User = mongoose.model('User',{
-    email:{
-        type:String,
-        required:true,
-        trim:true
-    }
-})
-  
-  var user = new User({
-      email:'shaikh.jishan1997@gmail.com'
-  }).save()
-  .then(doc=>console.log(doc))
-  .catch(e=>console.log(e))
