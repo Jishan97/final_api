@@ -27,12 +27,12 @@ res.send(doc)
 
 
 
-// app.get('/todos',(req,res)=>{
-//     Todo1.find().then((todos)=>{
-//             res.send(todos)
-//     })
-//     .catch(e=>console.log(e))
-// })
+app.get('/todos',(req,res)=>{
+    Todo1.find().then((todos)=>{
+            res.send(todos)
+    })
+    .catch(e=>console.log(e))
+})
 
 app.get('/todos/:id',(req,res)=>{
 
